@@ -14,8 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(HttpClientFactory::class, function ($app) {
-            return new HttpClientFactory($app);
+        $this->app->singleton('Illuminate\Contracts\Events\Dispatcher', function ($app) {
+            return new \Illuminate\Events\Dispatcher($app);
+        });
+        $this->app->singleton('Illuminate\Http\Client\Factory', function ($app) {
+            return new \Illuminate\Http\Client\Factory($app->make('Illuminate\Contracts\Events\Dispatcher'));
         });
     }
 }
