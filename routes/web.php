@@ -16,3 +16,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/consulta-oferta-credito', 'CreditoController@consultaOfertaCredito');
+$router->post('/simulacao-oferta-credito', 'CreditoController@simulacaoOfertaCredito');
+
