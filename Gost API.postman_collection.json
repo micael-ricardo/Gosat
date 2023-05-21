@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "fc877f27-c2f6-4ce8-aee6-b70a73c41498",
+		"name": "Gost API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27528371",
+		"_collection_link": "https://lively-shuttle-383827.postman.co/workspace/57603f3d-532a-4e3f-8edd-0a05fdb00c2e/collection/27528371-fc877f27-c2f6-4ce8-aee6-b70a73c41498?action=share&creator=27528371&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "consulta-oferta-credito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Exemplo de saída\", function () { pm.response.to.have.status(200); pm.response.to.have.jsonBody(); });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"cpf\": \"11111111111\"\r\n}\r\n// {\r\n//  \"cpf\": \"12312312312\"\r\n// }\r\n// {\r\n//  \"cpf\": \"22222222222\"\r\n// }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/consulta-oferta-credito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"consulta-oferta-credito"
+					]
+				},
+				"description": "Consulta as ofertas de crédito disponíveis para um CPF, seleciona as melhores opções com base nos detalhes da oferta e as ordena pelo valor a pagar. Em seguida, ela retorna as três melhores ofertas de crédito em formato JSON. A função verifica se o CPF foi fornecido e se há ofertas de crédito disponíveis antes de realizar a consulta."
+			},
+			"response": [
+
+			]
+		},
+		{
+			"name": "consulta-instituicao-credito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"cpf\": \"11111111111\"\r\n}\r\n// {\r\n//  \"cpf\": \"12312312312\"\r\n// }\r\n// {\r\n//  \"cpf\": \"22222222222\"\r\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/consulta-instituicao-credito/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"consulta-instituicao-credito",
+						""
+					]
+				},
+				"description": "Consulta as ofertas de crédito disponíveis para um CPF e retorna uma lista de instituições financeiras que oferecem essas ofertas. A função verifica se o CPF foi fornecido e se há ofertas de crédito disponíveis antes de realizar a consulta. Em seguida, ela adiciona cada instituição financeira à lista de instituições e retorna essa lista em formato JSON."
+			},
+			"response": [
+
+			]
+		},
+		{
+			"name": "detalhamento-oferta-credito",
+			"request": {
+				"method": "POST",
+				"header": [
+
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\r\n//     \"cpf\": \"11111111111\",\r\n//     \"instituicao_id\": 2,\r\n//     \"modalidade_cod\": \"a50ed2ed-2b8b-4cc7-ac95-71a5568b34ce\"\r\n// }\r\n// {\r\n//  \"cpf\": \"12312312312\", \r\n// \"instituicao_id\": 1, \r\n// \"modalidade_cod\": \"a50ed2ed-2b8b-4cc7-ac95-71a5568b34ce\" \r\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/detalhamento-oferta-credito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"detalhamento-oferta-credito"
+					]
+				},
+				"description": "Consulta o detalhamento de uma oferta de crédito para um CPF, instituição financeira e modalidade de crédito. Ela utiliza a API da Gosat para simular a oferta de crédito e obter o detalamento da oferta. A função verifica se as informações gerais das ofertas estão presentes e, se estiverem, formata essas informações em um objeto JSON e retorna esse objeto. Caso o detalhamento da oferta de crédito não seja encontrado, a função retorna uma mensagem de erro em formato JSON. A função também verifica se o CPF, o ID da instituição financeira e o código da modalidade de crédito foram fornecidos antes de realizar a consulta."
+			},
+			"response": [
+
+			]
+		},
+		{
+			"name": "ofertas-credito",
+			"request": {
+				"method": "POST",
+				"header": [
+
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"cpf\": \"11111111111\"\r\n}\r\n// {\r\n//  \"cpf\": \"12312312312\"\r\n// }\r\n// {\r\n//  \"cpf\": \"22222222222\"\r\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/ofertas-credito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"ofertas-credito"
+					]
+				},
+				"description": "consulta as ofertas de crédito disponíveis para um CPF e retorna uma lista de todas as ofertas de crédito disponíveis, incluindo informações sobre a instituição financeira, modalidade de crédito, o valor mínimo e máximo, os juros mensais e a quantidade mínima e máxima de parcelas. A função verifica se o CPF foi fornecido antes de realizar a consulta. Em seguida, ela utiliza a API da Gosat para consultar as ofertas de crédito disponíveis para o CPF informado. A função verifica se há ofertas disponíveis e, se houver, para cada instituição financeira e modalidade de crédito, ela consulta o detalhamento da oferta de crédito e adiciona a oferta à lista de todas as ofertas. A função retorna essa lista em formato JSON. Caso o CPF não seja fornecido ou não haja ofertas disponíveis, a função retorna uma mensagem de erro em formato JSON."
+			},
+			"response": [
+
+			]
+		}
+	]
+}
