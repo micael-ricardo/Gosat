@@ -35,6 +35,9 @@ $(document).ready(function () {
                             html += '<p class="card-text"><b>Valor Solicitado:</b> ' + oferta.valorSolicitado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '</p>';
                             html += '<p class="card-text"><b>Taxa de Juros:</b> ' + oferta.taxaJuros + '</p>';
                             html += '<p class="card-text"><b>Quantidade de Parcelas:</b> ' + oferta.quantidadeParcelas + '</p>';
+                            html += '<div class="card-info" style="display: none;">';
+                            html += '<b>Clique para mais detalhes!</b> ';
+                            html += '</div>';
                             html += '</div>';
                             html += '</div>';
                             html += '</div>';
@@ -59,6 +62,14 @@ $(document).ready(function () {
                             success: function (response) {
                                 // Abre o modal com os dados detalhados
                                 console.log(response);
+
+                                $('#modal-detalhamento-oferta-credito .valor-min').text(response.valorMin);
+                                $('#modal-detalhamento-oferta-credito .valor-max').text(response.valorMax);
+                                $('#modal-detalhamento-oferta-credito .juros-mes').text(response.jurosMes);
+                                $('#modal-detalhamento-oferta-credito .qnt-parcela-min').text(response.qntParcelaMin);
+                                $('#modal-detalhamento-oferta-credito .qnt-parcela-max').text(response.qntParcelaMax);
+                                $('#modal-detalhamento-oferta-credito').modal('show');
+
                                 // Exibe os detalhes da oferta de crédito na página
                                 // $('#detalhes-oferta-credito').html(response);
                             },
@@ -69,9 +80,11 @@ $(document).ready(function () {
                     });
                     // Cor de fundo para quando passar o mouse por cima
                     $('.card').mouseover(function () {
+                        $(this).find('.card-info').show();
                         $(this).css('background-color', 'lightgray');
                     });
                     $('.card').mouseout(function () {
+                        $(this).find('.card-info').hide();
                         $(this).css('background-color', 'white');
                     });
 
@@ -97,7 +110,7 @@ $(document).ready(function () {
                     });
                 }
             },
-            // Caso digite cpf errado ou faltando digito entra nesse erro
+            // Caso digite cpf faltando digito entra nesse erro
             error: function (xhr, status, error) {
                 var message = 'Ocorreu um erro na consulta: ' + xhr.responseJSON
                     .message;
@@ -108,3 +121,4 @@ $(document).ready(function () {
 });
 // Mascara para o campo Input cpf
 $('#cpf').inputmask('999.999.999-99');
+
