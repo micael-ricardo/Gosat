@@ -1,5 +1,5 @@
 @extends('template/layout')
-@section('title', 'Candidaturas')
+@section('title', 'Consulta de Crédito')
 @section('conteudo')
         <h2 class="display-4">Consulta de Crédito</h2>
         <div class="row col-md-6 mb-2">
