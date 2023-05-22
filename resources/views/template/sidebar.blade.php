@@ -8,11 +8,6 @@
                             <a  href="#" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi bi-cash-coin"></i><span class="ms-1  d-sm-inline">Consulta Crédito</span></a>
                         </li>
-                        <li>
-                            <a  href="#" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi bi-bank"></i> <span class="ms-1 d-none d-sm-inline">Detalhamento da oferta</span>
-                            </a>
-                        </li>
                 </ul>
                 <hr>
             </div>
