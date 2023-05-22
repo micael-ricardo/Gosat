@@ -23,7 +23,7 @@ class CreditoController extends Controller
         }
         // Consulte as ofertas de crédito para o CPF informado
         $ofertas = $this->gosatApi->consultaOfertaCredito($cpf);
-// dd($ofertas);
+        // dd($ofertas);
         // Verifique se há ofertas disponíveis
         if (empty($ofertas['instituicoes'])) {
             return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 404);
@@ -41,17 +41,22 @@ class CreditoController extends Controller
                 $melhoresOfertas = $this->selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas);
             }
         }
-        // Ordene as ofertas com no valor a pagar, do menor para o maior
+        // Ordene as ofertas com relação ao melhor para o cliente
+
         usort($melhoresOfertas, function ($a, $b) {
-            return $a['valorAPagar'] <=> $b['valorAPagar'];
+            if ($a['taxaJuros'] == $b['taxaJuros']) {
+                if ($a['quantidadeParcelas'] == $b['quantidadeParcelas']) {
+                    return $b['valorAPagar'] <=> $a['valorAPagar'];
+                }
+                return $a['quantidadeParcelas'] <=> $b['quantidadeParcelas'];
+            }
+            return $a['taxaJuros'] <=> $b['taxaJuros'];
         });
 
         // Selecione até 3 ofertas de crédito
         $melhoresOfertas = array_slice($melhoresOfertas, 0, 3);
-
         return response()->json($melhoresOfertas);
     }
-
     public function consultaInstituicaoCredito(Request $request)
     {
         $cpf = $request->input('cpf');
@@ -59,7 +64,6 @@ class CreditoController extends Controller
         if (empty($cpf)) {
             return response()->json(['message' => 'CPF não fornecido.'], 400);
         }
-
         // Consulte as ofertas de crédito para o CPF informado
         $ofertas = $this->gosatApi->consultaOfertaCredito($cpf);
 
@@ -94,7 +98,7 @@ class CreditoController extends Controller
         // Consulte o detalhamento da oferta de crédito
         $detalhesOferta = $this->gosatApi->simulacaoOfertaCredito($cpf, $instituicaoId, $modalidadeCod);
 
-        dd( $detalhesOferta);
+        dd($detalhesOferta);
         // Verifique se as informações gerais das ofertas estão presentes
         if (
             !isset($detalhesOferta['QntParcelaMin']) ||
