@@ -3,7 +3,6 @@ $(document).ready(function() {
         event.preventDefault();
 
         var cpf = $('#cpf').val();
-
         if (!cpf) {
             $('#resultado').html('<p>CPF não fornecido.</p>');
             return;
@@ -32,8 +31,8 @@ $(document).ready(function() {
                                 .instituicaoFinanceira + '<br>';
                             html += '<b>Modalidade de Crédito:</b> ' + oferta
                                 .modalidadeCredito + '<br>';
-                            html += '<b> Valor a Pagar: </b>' + oferta.valorAPagar + '<br>';
-                            html += '<b> Valor Solicitado: </b> ' + oferta.valorSolicitado +
+                            html += '<b> Valor a Pagar: </b>' + oferta.valorAPagar.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '<br>';
+                            html += '<b> Valor Solicitado: </b> ' + oferta.valorSolicitado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) +
                                 '<br>';
                             html += '<b> Taxa de Juros: </b>' + oferta.taxaJuros + '<br>';
                             html += '<b> Quantidade de Parcelas: </b>' + oferta
@@ -77,3 +76,5 @@ $(document).ready(function() {
         });
     });
 });
+
+$('#cpf').inputmask('999.999.999-99');
