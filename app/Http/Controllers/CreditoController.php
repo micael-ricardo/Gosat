@@ -28,21 +28,19 @@ class CreditoController extends Controller
         if (empty($ofertas['instituicoes'])) {
             return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 404);
         }
-
         $melhoresOfertas = [];
-
         // Para cada instituição financeira, consulte o detalhamento da oferta de crédito
-
         foreach ($ofertas['instituicoes'] as $instituicao) {
             foreach ($instituicao['modalidades'] as $modalidade) {
+                $Id = [$instituicao['id'], $modalidade['cod']];
                 $detalhesOferta = $this->gosatApi->simulacaoOfertaCredito($cpf, $instituicao['id'], $modalidade['cod']);
 
                 // Selecione as melhores ofertas com base nos detalhes da oferta
-                $melhoresOfertas = $this->selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas);
+                $melhoresOfertas = $this->selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas, $Id);
+                // Adicione o valor do atributo "data-instituicao-id" objeto de resposta
             }
         }
         // Ordene as ofertas com relação ao melhor para o cliente
-
         usort($melhoresOfertas, function ($a, $b) {
             if ($a['taxaJuros'] == $b['taxaJuros']) {
                 if ($a['quantidadeParcelas'] == $b['quantidadeParcelas']) {
@@ -52,7 +50,6 @@ class CreditoController extends Controller
             }
             return $a['taxaJuros'] <=> $b['taxaJuros'];
         });
-
         // Selecione até 3 ofertas de crédito
         $melhoresOfertas = array_slice($melhoresOfertas, 0, 3);
         return response()->json($melhoresOfertas);
@@ -88,17 +85,18 @@ class CreditoController extends Controller
     public function detalhamentoOfertaCredito(Request $request)
     {
         $cpf = $request->input('cpf');
-        $instituicaoId = $request->input('instituicao_id');
-        $modalidadeCod = $request->input('modalidade_cod');
+        $instituicaoId = $request->input('instituicaoId');
+        $codModalidade = $request->input('modalidadeCod');
 
-        if (empty($cpf) || empty($instituicaoId) || empty($modalidadeCod)) {
+        // dd($cpf)
+        if (empty($cpf) || empty($instituicaoId) || empty($codModalidade)) {
             return response()->json(['message' => 'CPF, ID da instituição financeira e código da modalidade de crédito são obrigatórios.'], 400);
         }
 
         // Consulte o detalhamento da oferta de crédito
-        $detalhesOferta = $this->gosatApi->simulacaoOfertaCredito($cpf, $instituicaoId, $modalidadeCod);
+        $detalhesOferta = $this->gosatApi->simulacaoOfertaCredito($cpf, $instituicaoId, $codModalidade);
 
-        dd($detalhesOferta);
+        // dd($detalhesOferta);
         // Verifique se as informações gerais das ofertas estão presentes
         if (
             !isset($detalhesOferta['QntParcelaMin']) ||
@@ -159,7 +157,7 @@ class CreditoController extends Controller
         return response()->json($todasOfertas);
     }
 
-    private function selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas)
+    private function selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas, $Id)
     {
 
         // Verifique se as informações gerais das ofertas estão presentes
@@ -176,18 +174,21 @@ class CreditoController extends Controller
         // Calcule o valor a pagar com base nas informações gerais das ofertas
         $valorSolicitado = $detalhesOferta['valorMin'];
         $valorAPagar = $valorSolicitado + ($valorSolicitado * $detalhesOferta['jurosMes']);
+
         $ofertaFormatada = [
             'instituicaoFinanceira' => $instituicao['nome'],
             'modalidadeCredito' => $modalidade['nome'],
             'valorAPagar' => $valorAPagar,
             'valorSolicitado' => $valorSolicitado,
             'taxaJuros' => $detalhesOferta['jurosMes'],
-            'quantidadeParcelas' => $detalhesOferta['QntParcelaMax']
+            'quantidadeParcelas' => $detalhesOferta['QntParcelaMax'],
+            'Id' => $Id
         ];
 
         // Adicione a oferta à lista de melhores ofertas
         $melhoresOfertas[] = $ofertaFormatada;
 
+        // dd( $ofertaFormatada);
         return $melhoresOfertas;
     }
 }
