@@ -17,6 +17,7 @@ class ConsultaCreditoController extends Controller
 
         // Obter o ID da consulta de crédito
         $consultaCreditoId = $consultaCredito->id;
+        
         $ofertas = $request->input('ofertas');
         foreach ($ofertas as $oferta) {
             OfertaCredito::create([
