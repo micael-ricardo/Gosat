@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Consulta de Oferta de Crédito</title>
-</head>
-
-<body>
-    <h1>Consulta de Crédito</h1>
-    <form id="consulta-form">
-        <label for="cpf">CPF:</label>
-        <input type="text" id="cpf" name="cpf">
-        <button type="submit">Consultar</button>
-    </form>
-
+@extends('template/layout')
+@section('title', 'Candidaturas')
+@section('conteudo')
+        <h2 class="display-4">Consulta de Crédito</h2>
+        <div class="row col-md-6 mb-2">
+            <form id="consulta-form">
+                <div class="input-group  ml-3">
+                    <input type="text" id="cpf" name="cpf" class="form-control  col-sm-4" placeholder="Digite o CPF">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Consultar
+                    </button>
+                </div>
+            </form>
+        </div>
     <div id="resultado"></div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/consultaCredito.js"></script>
-
-</body>
-
-</html>
+@endsection

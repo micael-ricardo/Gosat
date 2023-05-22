@@ -28,17 +28,17 @@ $(document).ready(function() {
                         if (response.hasOwnProperty(key)) {
                             var oferta = response[key];
                             html += '<li>';
-                            html += 'Instituição Financeira: ' + oferta
+                            html += '<b>Instituição Financeira:</b> ' + oferta
                                 .instituicaoFinanceira + '<br>';
-                            html += 'Modalidade de Crédito: ' + oferta
+                            html += '<b>Modalidade de Crédito:</b> ' + oferta
                                 .modalidadeCredito + '<br>';
-                            html += 'Valor a Pagar: ' + oferta.valorAPagar + '<br>';
-                            html += 'Valor Solicitado: ' + oferta.valorSolicitado +
+                            html += '<b> Valor a Pagar: </b>' + oferta.valorAPagar + '<br>';
+                            html += '<b> Valor Solicitado: </b> ' + oferta.valorSolicitado +
                                 '<br>';
-                            html += 'Taxa de Juros: ' + oferta.taxaJuros + '<br>';
-                            html += 'Quantidade de Parcelas: ' + oferta
+                            html += '<b> Taxa de Juros: </b>' + oferta.taxaJuros + '<br>';
+                            html += '<b> Quantidade de Parcelas: </b>' + oferta
                                 .quantidadeParcelas + '<br>';
-                            html += '</li>';
+                            html += '</li><br>';
                         }
                     }
 
