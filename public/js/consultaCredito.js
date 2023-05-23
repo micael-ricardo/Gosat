@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+    var graficoOfertas;
+
     $('#consulta-form').submit(function (event) {
         event.preventDefault();
 
@@ -69,9 +72,6 @@ $(document).ready(function () {
                                 $('#modal-detalhamento-oferta-credito .qnt-parcela-min').text(response.qntParcelaMin);
                                 $('#modal-detalhamento-oferta-credito .qnt-parcela-max').text(response.qntParcelaMax);
                                 $('#modal-detalhamento-oferta-credito').modal('show');
-
-                                // Exibe os detalhes da oferta de crédito na página
-                                // $('#detalhes-oferta-credito').html(response);
                             },
                             error: function () {
                                 alert('Erro ao obter detalhes da oferta de crédito.');
@@ -108,6 +108,55 @@ $(document).ready(function () {
                                 error);
                         }
                     });
+
+
+                    // dados do gráfico
+
+                    if (graficoOfertas) {
+                        graficoOfertas.destroy();
+                      }
+                      
+
+                    var valoresOfertas = [];
+                    var nomesInstituicoes = [];
+
+                    for (var key in response) {
+                        if (response.hasOwnProperty(key)) {
+                            var oferta = response[key];
+                            nomesInstituicoes.push(oferta.instituicaoFinanceira);
+                            valoresOfertas.push(oferta.valorAPagar);
+                        }
+                    }
+
+                    // Obtenha a referência ao elemento <canvas>
+                    var ctx = document.getElementById('grafico-ofertas').getContext('2d');
+
+                    // Crie o gráfico de barras usando o Chart.js
+                    graficoOfertas = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: nomesInstituicoes,
+                            datasets: [{
+                                label: 'Valores das Ofertas',
+                                data: valoresOfertas,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                
+                    atualizarGrafico(response, graficoOfertas);
+
+
                 }
             },
             // Caso digite cpf faltando digito entra nesse erro
@@ -115,78 +164,28 @@ $(document).ready(function () {
                 var message = 'Ocorreu um erro na consulta: ' + xhr.responseJSON
                     .message;
                 $('#resultado').html('<p>' + message + '</p>');
-            }            
+            }
         });
     });
 });
 
-// Extrai os dados necessários para o gráfico do HTML
-var ofertas = [];
-$('.card').each(function() {
-  var oferta = {
-    instituicao: $(this).find('.card-title').text(),
-    valorAPagar: parseFloat($(this).find('.card-text:eq(2)').text().replace('Valor a Pagar: ', '').replace(',', '').replace('R$', '')),
-    taxaJuros: parseFloat($(this).find('.card-text:eq(3)').text().replace('Taxa de Juros: ', '').replace('%', ''))
-  };
-  ofertas.push(oferta);
-});
-
-// Ordena as ofertas com base no valor a pagar (do menor para o maior)
-ofertas.sort(function(a, b) {
-  return a.valorAPagar - b.valorAPagar;
-});
-
-// Prepara os dados para o gráfico
-var instituicoes = ofertas.map(function(oferta) {
-  return oferta.instituicao;
-});
-var valoresAPagar = ofertas.map(function(oferta) {
-  return oferta.valorAPagar;
-});
-var taxasJuros = ofertas.map(function(oferta) {
-  return oferta.taxaJuros;
-});
-
-// Cria o gráfico usando o Chart.js
-// var ctx = document.getElementById('myChart').getContext('2d');
-// var myChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels: instituicoes,
-//     datasets: [{
-//       label: 'Valor a Pagar',
-//       data: valoresAPagar,
-//       backgroundColor: 'rgba(75, 192, 192, 0.2)',
-//       borderColor: 'rgba(75, 192, 192, 1)',
-//       borderWidth: 1
-//     }, {
-//       label: 'Taxa de Juros',
-//       data: taxasJuros,
-//       backgroundColor: 'rgba(255, 99, 132, 0.2)',
-//       borderColor: 'rgba(255, 99, 132, 1)',
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     scales: {
-//       y: {
-//         beginAtZero: true,
-//         ticks: {
-//           callback: function(value) {
-//             if (this.label.includes('Valor a Pagar')) {
-//               return 'R$' + value.toLocaleString('pt-BR');
-//             } else if (this.label.includes('Taxa de Juros')) {
-//               return value + '%';
-//             }
-//             return value;
-//           }
-//         }
-//       }
-//     }
-//   }
-// });
-
-
 // Mascara para o campo Input cpf
 $('#cpf').inputmask('999.999.999-99');
 
+function atualizarGrafico(response, graficoOfertas) {
+    // Crie um array para armazenar os nomes das instituições e os valores das ofertas
+    var nomesInstituicoes = [];
+    var valoresOfertas = [];
+
+    for (var key in response) {
+        if (response.hasOwnProperty(key)) {
+            var oferta = response[key];
+            nomesInstituicoes.push(oferta.instituicaoFinanceira);
+            valoresOfertas.push(oferta.valorAPagar);
+        }
+    }
+    // Atualiza os dados do gráfico existente
+    graficoOfertas.data.labels = nomesInstituicoes;
+    graficoOfertas.data.datasets[0].data = valoresOfertas;
+    graficoOfertas.update();
+}

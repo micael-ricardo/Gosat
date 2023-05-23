@@ -1,7 +1,7 @@
 @extends('template/layout')
 @section('title', 'Consulta de Crédito')
 @section('conteudo')
-    <h2 class="display-4">Consulta de Crédito</h2>
+    <h4 class="display-6">Consulta de Crédito</h4>
     <div class="row col-md-6 mb-2">
         <form id="consulta-form">
             <div class="input-group  ml-3">
@@ -13,7 +13,9 @@
         </form>
     </div>
     <div id="resultado"></div>
-    </div>
+    
+    <canvas id="grafico-ofertas" width="400" height="200"></canvas>
+
     <!-- Modal -->
     <div class="modal fade" id="modal-detalhamento-oferta-credito" tabindex="-1" role="dialog"
         aria-labelledby="modalLabel" aria-hidden="true" role="dialog" aria-modal="true">
@@ -33,10 +35,5 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row">
-        <div class="col-md-12">
-            <canvas id="myChart"></canvas>
-        </div>
-    </div> --}}
     <script src="js/consultaCredito.js"></script>
 @endsection

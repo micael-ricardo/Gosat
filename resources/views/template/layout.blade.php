@@ -19,7 +19,7 @@
     {{-- Incone --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     {{-- Chart --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- Estilo do sistema --}}
     <link rel="stylesheet" href="css/geral.css">
 

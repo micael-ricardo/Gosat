@@ -173,7 +173,7 @@ class CreditoController extends Controller
 
         // Calcule o valor a pagar com base nas informações gerais das ofertas
         $valorSolicitado = $detalhesOferta['valorMin'];
-        $valorAPagar = $valorSolicitado + ($valorSolicitado * $detalhesOferta['jurosMes']);
+        $valorAPagar = $valorSolicitado + ($valorSolicitado * $detalhesOferta['jurosMes'] * $detalhesOferta['QntParcelaMax']);
 
         $ofertaFormatada = [
             'instituicaoFinanceira' => $instituicao['nome'],
