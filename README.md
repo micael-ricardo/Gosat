@@ -30,7 +30,7 @@ php -S localhost:8000 -t public
 Abra o navegador da web e acesse o endereço: http://localhost:8000/   para visualizar o aplicativo.
 
 ## Para realizar o teste no navegador 
-Insira os cpf fornecidos pelo desafio clique no botão consultar e aparecera:  3 ofertas de crédito ordenadas da mais vantajosa
+Insira os cpf fornecidos pelo desafio clique no botão consultar e aparecera.  3 ofertas de crédito ordenadas da mais vantajosa
 a menos vantajosa contendo as seguintes informações:
 o instituicaoFinanceira
 o modalidadeCredito
