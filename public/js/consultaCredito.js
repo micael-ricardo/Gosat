@@ -172,8 +172,8 @@ $(document).ready(function () {
 // Mascara para o campo Input cpf
 $('#cpf').inputmask('999.999.999-99');
 
+// Função para recarregar o grafico sempre que fizer uma consulta
 function atualizarGrafico(response, graficoOfertas) {
-    // Crie um array para armazenar os nomes das instituições e os valores das ofertas
     var nomesInstituicoes = [];
     var valoresOfertas = [];
 
