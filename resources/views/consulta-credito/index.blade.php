@@ -33,6 +33,10 @@
             </div>
         </div>
     </div>
-
+    {{-- <div class="row">
+        <div class="col-md-12">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div> --}}
     <script src="js/consultaCredito.js"></script>
 @endsection

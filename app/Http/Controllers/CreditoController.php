@@ -19,14 +19,14 @@ class CreditoController extends Controller
         $cpf = $request->input('cpf');
 
         if (empty($cpf)) {
-            return response()->json(['message' => 'CPF não fornecido.'], 400);
+            return response()->json(['message' => 'CPF não fornecido.'], 422);
         }
         // Consulte as ofertas de crédito para o CPF informado
         $ofertas = $this->gosatApi->consultaOfertaCredito($cpf);
         // dd($ofertas);
         // Verifique se há ofertas disponíveis
         if (empty($ofertas['instituicoes'])) {
-            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 404);
+            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 422);
         }
         $melhoresOfertas = [];
         // Para cada instituição financeira, consulte o detalhamento da oferta de crédito
@@ -59,14 +59,14 @@ class CreditoController extends Controller
         $cpf = $request->input('cpf');
 
         if (empty($cpf)) {
-            return response()->json(['message' => 'CPF não fornecido.'], 400);
+            return response()->json(['message' => 'CPF não fornecido.'], 422);
         }
         // Consulte as ofertas de crédito para o CPF informado
         $ofertas = $this->gosatApi->consultaOfertaCredito($cpf);
 
         // Verifique se há ofertas disponíveis
         if (empty($ofertas['instituicoes'])) {
-            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 404);
+            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 422);
         }
 
         $instituicoes = [];
@@ -90,7 +90,7 @@ class CreditoController extends Controller
 
         // dd($cpf)
         if (empty($cpf) || empty($instituicaoId) || empty($codModalidade)) {
-            return response()->json(['message' => 'CPF, ID da instituição financeira e código da modalidade de crédito são obrigatórios.'], 400);
+            return response()->json(['message' => 'CPF, ID da instituição financeira e código da modalidade de crédito são obrigatórios.'], 422);
         }
 
         // Consulte o detalhamento da oferta de crédito
@@ -105,7 +105,7 @@ class CreditoController extends Controller
             !isset($detalhesOferta['valorMax']) ||
             !isset($detalhesOferta['jurosMes'])
         ) {
-            return response()->json(['message' => 'Detalhamento da oferta de crédito não encontrado.'], 404);
+            return response()->json(['message' => 'Detalhamento da oferta de crédito não encontrado.'], 422);
         }
 
         $detalhesOfertaFormatado = [
@@ -123,7 +123,7 @@ class CreditoController extends Controller
         $cpf = $request->input('cpf');
 
         if (empty($cpf)) {
-            return response()->json(['message' => 'CPF não fornecido.'], 400);
+            return response()->json(['message' => 'CPF não fornecido.'], 422);
         }
 
         // Consulte as ofertas de crédito para o CPF informado
@@ -131,7 +131,7 @@ class CreditoController extends Controller
 
         // Verifique se há ofertas disponíveis
         if (empty($ofertas['instituicoes'])) {
-            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 404);
+            return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 422);
         }
 
         $todasOfertas = [];

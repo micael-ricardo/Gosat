@@ -1,0 +1,78 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Gost API
+paths:
+  /consulta-oferta-credito:
+    post:
+      summary: Consulta as ofertas de crédito disponíveis para um CPF
+      description: >
+        Consulta as ofertas de crédito disponíveis para um CPF, seleciona as melhores opções com base nos detalhes da oferta e as ordena pelo valor a pagar.
+        Em seguida, ela retorna as três melhores ofertas de crédito em formato JSON.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              cpf:
+                type: string
+      responses:
+        200:
+          description: Sucesso
+  /consulta-instituicao-credito:
+    post:
+      summary: Consulta as instituições financeiras que oferecem ofertas de crédito
+      description: >
+        Consulta as ofertas de crédito disponíveis para um CPF e retorna uma lista de instituições financeiras que oferecem essas ofertas.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              cpf:
+                type: string
+      responses:
+        200:
+          description: Sucesso
+  /detalhamento-oferta-credito:
+    post:
+      summary: Consulta o detalhamento de uma oferta de crédito
+      description: >
+        Consulta o detalhamento de uma oferta de crédito para um CPF, instituição financeira e modalidade de crédito.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              cpf:
+                type: string
+              instituicao_id:
+                type: integer
+              modalidade_cod:
+                type: string
+      responses:
+        200:
+          description: Sucesso
+  /ofertas-credito:
+    post:
+      summary: Consulta todas as ofertas de crédito disponíveis
+      description: >
+        Consulta as ofertas de crédito disponíveis para um CPF e retorna uma lista de todas as ofertas de crédito disponíveis.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              cpf:
+                type: string
+      responses:
+        200:
+          description: Sucesso
