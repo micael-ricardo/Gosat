@@ -23,7 +23,6 @@ class CreditoController extends Controller
         }
         // Consulte as ofertas de crédito para o CPF informado
         $ofertas = $this->gosatApi->consultaOfertaCredito($cpf);
-        // dd($ofertas);
         // Verifique se há ofertas disponíveis
         if (empty($ofertas['instituicoes'])) {
             return response()->json(['message' => 'Nenhuma oferta de crédito disponível.'], 422);
@@ -34,10 +33,8 @@ class CreditoController extends Controller
             foreach ($instituicao['modalidades'] as $modalidade) {
                 $Id = [$instituicao['id'], $modalidade['cod']];
                 $detalhesOferta = $this->gosatApi->simulacaoOfertaCredito($cpf, $instituicao['id'], $modalidade['cod']);
-
                 // Selecione as melhores ofertas com base nos detalhes da oferta
                 $melhoresOfertas = $this->selecionaMelhoresOfertas($detalhesOferta, $instituicao, $modalidade, $melhoresOfertas, $Id);
-                // Adicione o valor do atributo "data-instituicao-id" objeto de resposta
             }
         }
         // Ordene as ofertas com relação ao melhor para o cliente
@@ -187,8 +184,6 @@ class CreditoController extends Controller
 
         // Adicione a oferta à lista de melhores ofertas
         $melhoresOfertas[] = $ofertaFormatada;
-
-        // dd( $ofertaFormatada);
         return $melhoresOfertas;
     }
 }
